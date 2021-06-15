@@ -3,7 +3,7 @@ import 'dart:io' show Platform;
 import 'package:app/Feature/Search/Views/SearchPage/BibleSearchDelegate.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:app/configs/colors.dart';
-import 'package:ff_navigation_bar/ff_navigation_bar.dart';
+// import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:app/Feature/InheritedBlocs.dart';
 import 'package:app/Feature/Navigation/navigation_feature.dart';
 import 'package:app/Feature/Reader/reader_feature.dart';
@@ -150,9 +150,7 @@ class _ReaderPageState extends State<ReaderPage> {
                 }
                 // Add your onPressed code here!
                 setState(() {
-                  icon = bolSpeaking == true
-                      ? Icons.stop
-                      : Icons.play_arrow; // Change icon and setState to rebuild
+                  icon = bolSpeaking == true ? Icons.stop : Icons.play_arrow; // Change icon and setState to rebuild
                 });
               },
               child: new Icon(icon, size: 25.0),
@@ -168,18 +166,14 @@ class _ReaderPageState extends State<ReaderPage> {
           builder: (_, nextChapter) {
             return StreamBuilder<ChapterReference>(
               stream: InheritedBlocs.of(context).bibleBloc.chapterReference,
-              builder:
-                  (context, AsyncSnapshot<ChapterReference> chapterReference) {
-                if (chapterReference.hasData &&
-                    prevChapter.hasData &&
-                    nextChapter.hasData) {
+              builder: (context, AsyncSnapshot<ChapterReference> chapterReference) {
+                if (chapterReference.hasData && prevChapter.hasData && nextChapter.hasData) {
                   elements = chapterReference.data.chapter.elements;
                   return CustomScrollView(
                     controller: controller,
                     slivers: <Widget>[
                       BibleReaderAppBar(
-                        title:
-                            "${chapterReference.data.chapter.book.name} ${chapterReference.data.chapter.number}",
+                        title: "${chapterReference.data.chapter.book.name} ${chapterReference.data.chapter.number}",
                         actions: <Widget>[
                           IconButton(
                             icon: Icon(

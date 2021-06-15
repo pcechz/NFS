@@ -1,0 +1,6 @@
+{
+  "spellright.language": ["en"],
+  "spellright.documentTypes": ["markdown", "latex"],
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "php.validate.executablePath": ""
+}

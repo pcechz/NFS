@@ -33,19 +33,11 @@ class _ListPageState extends State<ListPage> {
   }
 
   Future<void> _populateAnchors() async {
-    final http.Response response =
-        await http.get("https://nifes.org.ng/api/mobile/anchor/index");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/anchor/index"));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['anchors'].forEach((newsDetail) {
-      final Anchors news = Anchors(
-          description: newsDetail['description'],
-          verses: newsDetail['verses'],
-          uuid: newsDetail['uuid'],
-          createdAt: newsDetail['created_at'],
-          year: Year.fromJson(newsDetail['year']),
-          month: Year.fromJson(newsDetail['month']),
-          day: Year.fromJson(newsDetail['day']));
+      final Anchors news = Anchors(description: newsDetail['description'], verses: newsDetail['verses'], uuid: newsDetail['uuid'], createdAt: newsDetail['created_at'], year: Year.fromJson(newsDetail['year']), month: Year.fromJson(newsDetail['month']), day: Year.fromJson(newsDetail['day']));
       setState(() {
         _anchors.add(news);
         _isLoading = false;
@@ -63,15 +55,11 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     ListTile makeListTile(Anchors lesson) => ListTile(
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
           leading: Container(
             padding: EdgeInsets.only(right: 12.0),
-            decoration: new BoxDecoration(
-                border: new Border(
-                    right: new BorderSide(width: 1.0, color: Colors.white24))),
-            child:
-                Icon(Icons.book_online, color: Color.fromRGBO(58, 66, 86, 1.0)),
+            decoration: new BoxDecoration(border: new Border(right: new BorderSide(width: 1.0, color: Colors.white24))),
+            child: Icon(Icons.book_online, color: Color.fromRGBO(58, 66, 86, 1.0)),
           ),
 
           title: Text(
@@ -89,14 +77,9 @@ class _ListPageState extends State<ListPage> {
                       )),
             ],
           ),
-          trailing:
-              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
+          trailing: Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ParallaxPage(lesson: lesson, type: 1)));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ParallaxPage(lesson: lesson, type: 1)));
           },
         );
 //Color.fromRGBO(58, 66, 86, 1.0)
@@ -104,9 +87,7 @@ class _ListPageState extends State<ListPage> {
           elevation: 8.0,
           margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Color.fromRGBO(58, 66, 86, 1.0))),
+            decoration: BoxDecoration(color: Colors.white, border: Border.all(color: Color.fromRGBO(58, 66, 86, 1.0))),
             child: makeListTile(lesson),
           ),
         );

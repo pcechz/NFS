@@ -26,15 +26,11 @@ class _AnchorPageState extends State<AnchorPage> {
   }
 
   Future<void> _populateAnchors() async {
-    final http.Response response =
-        await http.get("https://nifes.org.ng/api/mobile/anchor/index");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/anchor/index"));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['anchors'].forEach((newsDetail) {
-      final Anchors news = Anchors(
-          description: newsDetail['description'],
-          uuid: newsDetail['uuid'],
-          createdAt: newsDetail['created_at']);
+      final Anchors news = Anchors(description: newsDetail['description'], uuid: newsDetail['uuid'], createdAt: newsDetail['created_at']);
       setState(() {
         _anchors.add(news);
       });
@@ -44,18 +40,13 @@ class _AnchorPageState extends State<AnchorPage> {
   Widget build(BuildContext context) {
     final levelIndicator = Container(
       child: Container(
-        child: LinearProgressIndicator(
-            backgroundColor: Color.fromRGBO(209, 224, 224, 0.2),
-            value: 100,
-            valueColor: AlwaysStoppedAnimation(Colors.green)),
+        child: LinearProgressIndicator(backgroundColor: Color.fromRGBO(209, 224, 224, 0.2), value: 100, valueColor: AlwaysStoppedAnimation(Colors.green)),
       ),
     );
 
     final coursePrice = Container(
       padding: const EdgeInsets.all(7.0),
-      decoration: new BoxDecoration(
-          border: new Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(5.0)),
+      decoration: new BoxDecoration(border: new Border.all(color: Colors.white), borderRadius: BorderRadius.circular(5.0)),
       child: new Text(
         "New",
         style: TextStyle(color: Colors.white),
@@ -153,15 +144,15 @@ class _AnchorPageState extends State<AnchorPage> {
       //   networkSourceMatcher():
       //       networkImageRender(altWidget: (_) => FlutterLogo()),
       // },
-      onLinkTap: (url) {
-        var uri = Uri.dataFromString(url);
-        var uuid = uri.pathSegments[4];
-        print(uuid);
-        print("Opening $url...");
-      },
-      onImageTap: (src) {
-        print(src);
-      },
+      // onLinkTap: (url) {
+      //   var uri = Uri.dataFromString(url);
+      //   var uuid = uri.pathSegments[4];
+      //   print(uuid);
+      //   print("Opening $url...");
+      // },
+      // onImageTap: (src) {
+      //   print(src);
+      // },
       onImageError: (exception, stackTrace) {
         print(exception);
       },

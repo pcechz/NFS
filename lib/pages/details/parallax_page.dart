@@ -6,7 +6,7 @@ import 'package:app/models/Anchors.dart';
 import 'package:app/ui/screens/home/widgets/CommentsPage.dart';
 import 'parallax_component.dart';
 // import 'package:fluttertagselector/fluttertagselector.dart';
-import 'package:esv_api/esv_api.dart';
+// import 'package:esv_api/esv_api.dart';
 
 class ParallaxPage extends StatefulWidget {
   final Anchors lesson;
@@ -46,17 +46,17 @@ class _ParallaxPageState extends State<ParallaxPage> {
                   activeColor: Colors.red,
                   onPressed: (Item item) async {
                     print('pressed');
-                    var esvApi =
-                        ESVAPI('4cd7d044d7310d15b6ca4a233c1f44ed5a6de17e');
+                    // var esvApi =
+                    //     ESVAPI('4cd7d044d7310d15b6ca4a233c1f44ed5a6de17e');
 
-                    var response = await esvApi.getPassageText(
-                        selectedTags[index],
-                        include_short_copyright: false,
-                        include_copyright: false);
+                    // var response = await esvApi.getPassageText(
+                    //     selectedTags[index],
+                    //     include_short_copyright: false,
+                    //     include_copyright: false);
 
-                    print(response.passages.first);
-                    _showTestDialog(
-                        response.passages.first, response.canonical);
+                    // print(response.passages.first);
+                    // _showTestDialog(
+                    //     response.passages.first, response.canonical);
                   },
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
@@ -194,15 +194,15 @@ class _ParallaxPageState extends State<ParallaxPage> {
           //   networkSourceMatcher():
           //       networkImageRender(altWidget: (_) => FlutterLogo()),
           // },
-          onLinkTap: (url) {
-            var uri = Uri.dataFromString(url);
-            var uuid = uri.pathSegments[4];
-            print(uuid);
-            print("Opening $url...");
-          },
-          onImageTap: (src) {
-            print(src);
-          },
+          // onLinkTap: (url) {
+          //   var uri = Uri.dataFromString(url);
+          //   var uuid = uri.pathSegments[4];
+          //   print(uuid);
+          //   print("Opening $url...");
+          // },
+          // onImageTap: (src) {
+          //   print(src);
+          // },
           onImageError: (exception, stackTrace) {
             print(exception);
           },

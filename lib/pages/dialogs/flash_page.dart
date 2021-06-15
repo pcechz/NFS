@@ -1,7 +1,7 @@
 import 'package:app/models/Advert.dart';
 import 'package:app/services/webservice.dart';
 import 'package:flutter/material.dart';
-import 'package:meet_network_image/meet_network_image.dart';
+// import 'package:meet_network_image/meet_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlashPage extends StatefulWidget {
@@ -39,19 +39,20 @@ class FlashPageState extends State<FlashPage> {
         ),
       ),
       body: new Container(
-        child: MeetNetworkImage(
+        child: Image.network(
+          adverts[0].urlToImage,
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
           //color: Colors.purple,
           colorBlendMode: BlendMode.difference,
-          imageUrl: adverts[0].urlToImage,
-          loadingBuilder: (context) => Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorBuilder: (context, e) => Center(
-            child: Text('Error appear!'),
-          ),
+
+          // loadingBuilder: (context) => Center(
+          //   child: CircularProgressIndicator(),
+          // ),
+          // errorBuilder: (context, e) => Center(
+          //   child: Text('Error appear!'),
+          // ),
         ),
         // width: MediaQuery.of(context).size.width,
         // height: MediaQuery.of(context).size.height,

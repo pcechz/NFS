@@ -13,20 +13,15 @@ class Network {
   }
 
   authData(data, apiUrl) async {
-    var fullUrl = _url + apiUrl;
-    return await http.post(fullUrl,
-        body: jsonEncode(data), headers: _setHeaders());
+    var fullUrl = Uri.parse(_url + apiUrl);
+    return await http.post(fullUrl, body: jsonEncode(data), headers: _setHeaders());
   }
 
   getData(apiUrl) async {
-    var fullUrl = _url + apiUrl;
+    var fullUrl = Uri.parse(_url + apiUrl);
     await _getToken();
     return await http.get(fullUrl, headers: _setHeaders());
   }
 
-  _setHeaders() => {
-        'Content-type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer $token'
-      };
+  _setHeaders() => {'Content-type': 'application/json', 'Accept': 'application/json', 'Authorization': 'Bearer $token'};
 }

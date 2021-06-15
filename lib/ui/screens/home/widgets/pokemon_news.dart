@@ -14,10 +14,7 @@ class _PokemonNews extends StatelessWidget {
   // _PokemonNews(List<NewsArticle> newsArticles);
   //this._newsArticles = new
   PokeNews _buildItemsForListView(BuildContext context, int index) {
-    return PokeNews(
-        title: _newsArticles[index].title,
-        time: '15 May 2019',
-        thumbnail: _newsArticles[index].urlToImage);
+    return PokeNews(title: _newsArticles[index].title, time: '15 May 2019', thumbnail: _newsArticles[index].urlToImage);
 
     // ListTile(
     //   title: _newsArticles[index].urlToImage == null
@@ -29,15 +26,11 @@ class _PokemonNews extends StatelessWidget {
   }
 
   getNews() async {
-    final http.Response response =
-        await http.get("https://nifes.org.ng/api/mobile/posts");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/posts"));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['data'].forEach((newsDetail) {
-      final NewsArticle news = NewsArticle(
-          descrption: _parseHtmlString(newsDetail['body'][150]).toString(),
-          title: newsDetail['title'],
-          urlToImage: newsDetail['image']);
+      final NewsArticle news = NewsArticle(descrption: _parseHtmlString(newsDetail['body'][150]).toString(), title: newsDetail['title'], urlToImage: newsDetail['image']);
       // setState(() {
       _newsArticles.add(news);
       // });
@@ -103,30 +96,16 @@ class _PokemonNews extends StatelessWidget {
                   child: Container(
                     height: 150,
                     decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(color: Colors.white, width: 1),
-                          right: BorderSide(color: Colors.green, width: 5),
-                          left: BorderSide(color: Colors.purple, width: 5)),
+                      border: Border(top: BorderSide(color: Colors.white, width: 1), right: BorderSide(color: Colors.green, width: 5), left: BorderSide(color: Colors.purple, width: 5)),
                     ),
                     child: Column(
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
                         ),
-                        Text("Daily Bible Verse",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
-                        Text(
-                            "But while they were on their way to buy the oil, the bridegroom arrived. The virgins who were ready went in with him to the wedding banquet. And the door was shut",
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white,
-                                fontStyle: FontStyle.italic)),
-                        Text("MATTHEW 25:1-13",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                        Text("Daily Bible Verse", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                        Text("But while they were on their way to buy the oil, the bridegroom arrived. The virgins who were ready went in with him to the wedding banquet. And the door was shut", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white, fontStyle: FontStyle.italic)),
+                        Text("MATTHEW 25:1-13", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                       ],
                     ),
                   ))

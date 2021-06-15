@@ -7,7 +7,7 @@ import 'package:app/models/Updates.dart';
 import 'package:app/ui/screens/home/widgets/CommentsPage.dart';
 import 'parallax_component.dart';
 // import 'package:fluttertagselector/fluttertagselector.dart';
-import 'package:esv_api/esv_api.dart';
+// import 'package:esv_api/esv_api.dart';
 
 class UpdateDetails extends StatefulWidget {
   final Updates lesson;
@@ -57,15 +57,15 @@ class _UpdateDetailsState extends State<UpdateDetails> {
           //   networkSourceMatcher():
           //       networkImageRender(altWidget: (_) => FlutterLogo()),
           // },
-          onLinkTap: (url) {
-            var uri = Uri.dataFromString(url);
-            var uuid = uri.pathSegments[4];
-            print(uuid);
-            print("Opening $url...");
-          },
-          onImageTap: (src) {
-            print(src);
-          },
+          // onLinkTap: (url) {
+          //   var uri = Uri.dataFromString(url);
+          //   var uuid = uri.pathSegments[4];
+          //   print(uuid);
+          //   print("Opening $url...");
+          // },
+          // onImageTap: (src) {
+          //   print(src);
+          // },
           onImageError: (exception, stackTrace) {
             print(exception);
           },

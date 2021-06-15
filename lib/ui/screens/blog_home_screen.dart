@@ -24,7 +24,7 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
   }
 
   Future<void> _populatePosts() async {
-    final http.Response response = await http.get(Constants.HEADLINE_NEWS_URL);
+    final http.Response response = await http.get(Uri.parse(Constants.HEADLINE_NEWS_URL));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['data'].forEach((newsDetail) {
@@ -32,8 +32,7 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
       final Blog news = Blog(
           name: newsDetail['title'],
           content: newsDetail['body'],
-          imageUrl:
-              newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
+          imageUrl: newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           // 'https://nifes.org.ng/' + newsDetail['image'].substring(19) ??
           // Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           slug: newsDetail['slug'],
@@ -73,43 +72,16 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                     itemBuilder: (BuildContext context, int index) {
                       //final Blog blog = _posts[index];
                       return GestureDetector(
-                        onTap: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      BlogScreen(blog: _posts[index])))
-                        },
+                        onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (_) => BlogScreen(blog: _posts[index])))},
                         child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 20.0, top: 20.0, bottom: 20.0),
+                          padding: EdgeInsets.only(left: 20.0, top: 20.0, bottom: 20.0),
                           child: Stack(
                             children: <Widget>[
                               Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.80,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.90,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14.0),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0.0, 4.0),
-                                            blurRadius: 10.0,
-                                            spreadRadius: 0.10)
-                                      ]),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(14.0),
-                                      child: _posts[index].imageUrl == null
-                                          ? Image.asset(
-                                              Constants
-                                                  .NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
-                                              fit: BoxFit.cover)
-                                          : Image.network(
-                                              _posts[index].imageUrl,
-                                              fit: BoxFit.cover))),
+                                  width: MediaQuery.of(context).size.width * 0.80,
+                                  height: MediaQuery.of(context).size.width * 0.90,
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(14.0), color: Colors.white, boxShadow: [BoxShadow(color: Colors.black26, offset: Offset(0.0, 4.0), blurRadius: 10.0, spreadRadius: 0.10)]),
+                                  child: ClipRRect(borderRadius: BorderRadius.circular(14.0), child: _posts[index].imageUrl == null ? Image.asset(Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL, fit: BoxFit.cover) : Image.network(_posts[index].imageUrl, fit: BoxFit.cover))),
                               Positioned(
                                 bottom: 10.0,
                                 left: 10.0,
@@ -117,8 +89,7 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.60,
+                                      width: MediaQuery.of(context).size.width * 0.60,
                                       child: Text(
                                         _posts[index].name ?? "",
                                         style: TextStyle(
@@ -131,18 +102,11 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                                     ),
                                     SizedBox(height: 10.0),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: <Widget>[
-                                        CircleAvatar(
-                                            radius: 10.0,
-                                            backgroundImage: AssetImage(
-                                                'assets/images/photo_female_1.jpg')),
+                                        CircleAvatar(radius: 10.0, backgroundImage: AssetImage('assets/images/photo_female_1.jpg')),
                                         SizedBox(width: 8.0),
-                                        Text("admin",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14.0)),
+                                        Text("admin", style: TextStyle(color: Colors.white, fontSize: 14.0)),
                                       ],
                                     )
                                   ],
@@ -170,8 +134,7 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                               Positioned(
                                 top: 10.0,
                                 right: 10.0,
-                                child: Icon(Icons.bookmark,
-                                    size: 26.0, color: Colors.white),
+                                child: Icon(Icons.bookmark, size: 26.0, color: Colors.white),
                               )
                             ],
                           ),
@@ -184,22 +147,17 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                 Container(
                   color: Colors.white,
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
                           "Recent Posts",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.black, fontSize: 22.0, fontWeight: FontWeight.bold),
                         ),
                         Text(
                           "See all",
-                          style: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 16.0),
+                          style: TextStyle(color: Colors.lightBlueAccent, fontSize: 16.0),
                         )
                       ],
                     ),
@@ -211,61 +169,30 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: _posts
                           .map((blog) => GestureDetector(
-                              onTap: () => {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                BlogScreen(blog: blog)))
-                                  },
+                              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (_) => BlogScreen(blog: blog)))},
                               child: Container(
                                 margin: EdgeInsets.only(bottom: 15.0),
                                 width: MediaQuery.of(context).size.width,
                                 height: 140,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Color(0xFFFAFAFA),
-                                          offset: Offset(0.0, 10.0),
-                                          blurRadius: 10.0,
-                                          spreadRadius: 0.5)
-                                    ]),
+                                decoration: BoxDecoration(color: Colors.white, boxShadow: [BoxShadow(color: Color(0xFFFAFAFA), offset: Offset(0.0, 10.0), blurRadius: 10.0, spreadRadius: 0.5)]),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 15.0, horizontal: 20.0),
+                                  padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
                                   child: Row(
                                     children: <Widget>[
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.22,
+                                        width: MediaQuery.of(context).size.width * 0.22,
                                         height: 110,
-                                        decoration: BoxDecoration(
-                                            color: Colors.blue,
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
+                                        decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(10.0)),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          child: blog.imageUrl == null
-                                              ? Image.asset(
-                                                  Constants
-                                                      .NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
-                                                  fit: BoxFit.fill)
-                                              : Image.network(blog.imageUrl,
-                                                  fit: BoxFit.fill),
+                                          borderRadius: BorderRadius.circular(10.0),
+                                          child: blog.imageUrl == null ? Image.asset(Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL, fit: BoxFit.fill) : Image.network(blog.imageUrl, fit: BoxFit.fill),
                                         ),
                                       ),
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.66,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0),
+                                        width: MediaQuery.of(context).size.width * 0.66,
+                                        padding: EdgeInsets.symmetric(horizontal: 20.0),
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: <Widget>[
                                             SizedBox(height: 5.0),
                                             Text(
@@ -280,11 +207,7 @@ class _BlogHomeScreenState extends State<BlogHomeScreen> {
                                               height: 58,
                                               child: Text(
                                                 blog.name ?? "",
-                                                style: TextStyle(
-                                                    fontSize: 18.0,
-                                                    color: Colors.black,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: TextStyle(fontSize: 18.0, color: Colors.black, fontWeight: FontWeight.bold),
                                               ),
                                             ),
                                             Row(

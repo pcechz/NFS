@@ -45,13 +45,7 @@ class _BlogScreenState extends State<BlogScreen> {
                 children: <Widget>[
                   Container(
                     height: MediaQuery.of(context).size.height * 0.45,
-                    child: ClipRRect(
-                        child: widget.blog.imageUrl == null
-                            ? Image.asset(
-                                Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
-                                fit: BoxFit.cover)
-                            : Image.network(widget.blog.imageUrl,
-                                fit: BoxFit.cover)),
+                    child: ClipRRect(child: widget.blog.imageUrl == null ? Image.asset(Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL, fit: BoxFit.cover) : Image.network(widget.blog.imageUrl, fit: BoxFit.cover)),
                   ),
                   Positioned(
                     bottom: 0,
@@ -60,9 +54,7 @@ class _BlogScreenState extends State<BlogScreen> {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(60.0),
-                            topRight: Radius.circular(60.0)),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(60.0), topRight: Radius.circular(60.0)),
                       ),
                       child: SizedBox(width: 1),
                     ),
@@ -108,11 +100,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   children: <Widget>[
                     Text(
                       widget.blog.name,
-                      style: TextStyle(
-                          fontSize: 28.0,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1.2),
+                      style: TextStyle(fontSize: 28.0, color: Colors.black, fontWeight: FontWeight.bold, letterSpacing: 1.2),
                     ),
                     SizedBox(height: 15.0),
                     Row(
@@ -133,8 +121,7 @@ class _BlogScreenState extends State<BlogScreen> {
                             SizedBox(width: 2.0),
                             Text(
                               widget.blog.created_at,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 16.0),
+                              style: TextStyle(color: Colors.grey, fontSize: 16.0),
                             )
                           ],
                         ),
@@ -166,10 +153,7 @@ class _BlogScreenState extends State<BlogScreen> {
                         SizedBox(width: 10.0),
                         Text(
                           "admin",
-                          style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600,
-                              letterSpacing: 0.8),
+                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, letterSpacing: 0.8),
                         )
                       ],
                     ),
@@ -178,36 +162,28 @@ class _BlogScreenState extends State<BlogScreen> {
                       data: widget.blog.content,
                       //Optional parameters:
                       customImageRenders: {
-                        networkSourceMatcher(domains: ["flutter.dev"]):
-                            (context, attributes, element) {
+                        networkSourceMatcher(domains: ["flutter.dev"]): (context, attributes, element) {
                           return FlutterLogo(size: 36);
                         },
-                        networkSourceMatcher(domains: ["mydomain.com"]):
-                            networkImageRender(
+                        networkSourceMatcher(domains: ["mydomain.com"]): networkImageRender(
                           headers: {"Custom-Header": "some-value"},
                           altWidget: (alt) => Text(alt),
                           loadingWidget: () => Text("Loading..."),
                         ),
                         // On relative paths starting with /wiki, prefix with a base url
-                        (attr, _) =>
-                                attr["src"] != null &&
-                                attr["src"].startsWith("/wiki"):
-                            networkImageRender(
-                                mapUrl: (url) =>
-                                    "https://upload.wikimedia.org" + url),
+                        (attr, _) => attr["src"] != null && attr["src"].startsWith("/wiki"): networkImageRender(mapUrl: (url) => "https://upload.wikimedia.org" + url),
                         // Custom placeholder image for broken links
-                        networkSourceMatcher():
-                            networkImageRender(altWidget: (_) => FlutterLogo()),
+                        networkSourceMatcher(): networkImageRender(altWidget: (_) => FlutterLogo()),
                       },
-                      onLinkTap: (url) {
-                        var uri = Uri.dataFromString(url);
-                        var uuid = uri.pathSegments[4];
-                        print(uuid);
-                        print("Opening $url...");
-                      },
-                      onImageTap: (src) {
-                        print(src);
-                      },
+                      // onLinkTap: (url) {
+                      //   var uri = Uri.dataFromString(url);
+                      //   var uuid = uri.pathSegments[4];
+                      //   print(uuid);
+                      //   print("Opening $url...");
+                      // },
+                      // onImageTap: (src) {
+                      //   print(src);
+                      // },
                       onImageError: (exception, stackTrace) {
                         print(exception);
                       },

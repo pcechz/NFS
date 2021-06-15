@@ -28,15 +28,11 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   Future<void> _populateAnchors() async {
-    final http.Response response =
-        await http.get("https://nifes.org.ng/api/mobile/anchor/index");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/anchor/index"));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['anchors'].forEach((newsDetail) {
-      final Anchors news = Anchors(
-          description: newsDetail['body'],
-          uuid: newsDetail['uuid'],
-          createdAt: newsDetail['createdAt']);
+      final Anchors news = Anchors(description: newsDetail['body'], uuid: newsDetail['uuid'], createdAt: newsDetail['createdAt']);
       setState(() {
         _anchors.add(news);
       });
@@ -75,12 +71,12 @@ class _DetailPageState extends State<DetailPage> {
                 //   networkSourceMatcher():
                 //       networkImageRender(altWidget: (_) => FlutterLogo()),
                 // },
-                onLinkTap: (url) {
-                  print("Opening $url...");
-                },
-                onImageTap: (src) {
-                  print(src);
-                },
+                // onLinkTap: (url) {
+                //   print("Opening $url...");
+                // },
+                // onImageTap: (src) {
+                //   print(src);
+                // },
                 onImageError: (exception, stackTrace) {
                   print(exception);
                 },

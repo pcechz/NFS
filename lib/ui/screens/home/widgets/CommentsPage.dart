@@ -38,11 +38,7 @@ class _CommentsPageState extends State<CommentsPage> {
     });
     SharedPreferences localStorage = await SharedPreferences.getInstance();
 
-    var data = {
-      'comment': comment,
-      'anchor_id': anchor_id,
-      "user_id": localStorage.getString('user_id')
-    };
+    var data = {'comment': comment, 'anchor_id': anchor_id, "user_id": localStorage.getString('user_id')};
     var res = await Network().authData(data, '/anchor/sendComment');
     var body = json.decode(res.body);
     print(body);
@@ -75,21 +71,13 @@ class _CommentsPageState extends State<CommentsPage> {
 
   Future<void> _populateAnchorsComments() async {
     // print("the uuid+${uuid}");
-    final http.Response response = await http.get(
-        "https://nifes.org.ng/api/mobile/anchor/showcomments/${widget.uuid}");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/anchor/showcomments/${widget.uuid}"));
     final Map<String, dynamic> responseData = json.decode(response.body);
     print("thee+${responseData}");
 
     responseData['comments'].forEach((newsDetail) {
       final Comments news = Comments(
-          id: newsDetail['id'],
-          userId: newsDetail['user_id'],
-          firstName: newsDetail['first_name'] ?? "",
-          lastName: newsDetail['last_name'] ?? "",
-          anchorId: newsDetail['anchor_id'],
-          comment: newsDetail['comment'] ?? "",
-          createdAt: newsDetail['created_at'],
-          updatedAt: newsDetail['updated_at']);
+          id: newsDetail['id'], userId: newsDetail['user_id'], firstName: newsDetail['first_name'] ?? "", lastName: newsDetail['last_name'] ?? "", anchorId: newsDetail['anchor_id'], comment: newsDetail['comment'] ?? "", createdAt: newsDetail['created_at'], updatedAt: newsDetail['updated_at']);
       setState(() {
         _comments.add(news);
       });
@@ -119,9 +107,7 @@ class _CommentsPageState extends State<CommentsPage> {
         elevation: 8.0,
         margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
-            decoration: BoxDecoration(
-                color: Color.fromRGBO(64, 75, 96, .9),
-                borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9), borderRadius: BorderRadius.circular(10)),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
               child: ListTile(
@@ -133,18 +119,13 @@ class _CommentsPageState extends State<CommentsPage> {
                   child: Container(
                     height: 50.0,
                     width: 50.0,
-                    decoration: new BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius:
-                            new BorderRadius.all(Radius.circular(50))),
-                    child: CircleAvatar(
-                        radius: 50, backgroundImage: AppImages.commentpic),
+                    decoration: new BoxDecoration(color: Colors.blue, borderRadius: new BorderRadius.all(Radius.circular(50))),
+                    child: CircleAvatar(radius: 50, backgroundImage: AppImages.commentpic),
                   ),
                 ),
                 title: Text(
                   "${comm.firstName + " " + comm.lastName}",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 subtitle: Text(
                   comm.comment,
@@ -174,23 +155,14 @@ class _CommentsPageState extends State<CommentsPage> {
               print(commentController.text);
               setState(() async {
                 var localStorage = await SharedPreferences.getInstance();
-                Comments vals = Comments(
-                    id: 0,
-                    comment: commentController.text,
-                    userId: localStorage.getString('user_id'),
-                    firstName: localStorage.getString('name'),
-                    createdAt: "",
-                    updatedAt: "",
-                    lastName: "",
-                    anchorId: widget.uuid);
+                Comments vals = Comments(id: 0, comment: commentController.text, userId: localStorage.getString('user_id'), firstName: localStorage.getString('name'), createdAt: "", updatedAt: "", lastName: "", anchorId: widget.uuid);
                 // var value = {
                 //   'name': 'New User',
                 //   'pic':
                 //       'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
                 //   'message': commentController.text
                 // };
-                var inserted =
-                    _sendComment(commentController.text, widget.uuid);
+                var inserted = _sendComment(commentController.text, widget.uuid);
                 if (inserted != false) {
                   print("commentController");
                   _comments.insert(0, vals);

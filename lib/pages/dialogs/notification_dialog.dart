@@ -5,11 +5,11 @@ import 'package:app/models/Anchors.dart';
 import 'package:app/routers/routes.dart';
 import 'package:app/services/webservice.dart';
 import 'package:app/ui/screens/home/widgets/CommentsPage.dart';
-import 'package:esv_api/esv_api.dart';
+// import 'package:esv_api/esv_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tags/flutter_tags.dart';
-import 'package:meet_network_image/meet_network_image.dart';
+// import 'package:meet_network_image/meet_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -39,25 +39,16 @@ class NotificationDialogState extends State<NotificationDialog> {
 
   Future<void> _populateAnchors(String type, String uuid) async {
     var url = "";
-    type == "1"
-        ? url = "https://nifes.org.ng/api/mobile/anchor/showid/$uuid"
-        : url = "https://nifes.org.ng/api/mobile/bulletin/showid/$uuid";
+    type == "1" ? url = "https://nifes.org.ng/api/mobile/anchor/showid/$uuid" : url = "https://nifes.org.ng/api/mobile/bulletin/showid/$uuid";
 
-    final http.Response response = await http.get(url);
+    final http.Response response = await http.get(Uri.parse(url));
     final Map<String, dynamic> responseData = json.decode(response.body);
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     var token = localStorage.getString('token');
     if (token != null) {
       print("heeeee1");
       responseData[type == "1" ? 'anchors' : 'bulletins'].forEach((newsDetail) {
-        final Anchors news = Anchors(
-            description: newsDetail['description'],
-            verses: newsDetail['verses'],
-            uuid: newsDetail['uuid'],
-            createdAt: newsDetail['created_at'],
-            year: Year.fromJson(newsDetail['year']),
-            month: Year.fromJson(newsDetail['month']),
-            day: Year.fromJson(newsDetail['day']));
+        final Anchors news = Anchors(description: newsDetail['description'], verses: newsDetail['verses'], uuid: newsDetail['uuid'], createdAt: newsDetail['created_at'], year: Year.fromJson(newsDetail['year']), month: Year.fromJson(newsDetail['month']), day: Year.fromJson(newsDetail['day']));
 
         // if (mounted)
         setState(() {
@@ -65,9 +56,7 @@ class NotificationDialogState extends State<NotificationDialog> {
           // _isLoading = false;
           if (_anchors.length > 0) {
             print("heeeee");
-            selectedTags = _anchors[0].verses.length > 0
-                ? _anchors[0].verses.split(",")
-                : null;
+            selectedTags = _anchors[0].verses.length > 0 ? _anchors[0].verses.split(",") : null;
             // Navigator.push(
             //     context,
             //     MaterialPageRoute(
@@ -98,17 +87,17 @@ class NotificationDialogState extends State<NotificationDialog> {
                   activeColor: Colors.red,
                   onPressed: (Item item) async {
                     print('pressed');
-                    var esvApi =
-                        ESVAPI('4cd7d044d7310d15b6ca4a233c1f44ed5a6de17e');
+                    // var esvApi =
+                    //     ESVAPI('4cd7d044d7310d15b6ca4a233c1f44ed5a6de17e');
 
-                    var response = await esvApi.getPassageText(
-                        selectedTags[index],
-                        include_short_copyright: false,
-                        include_copyright: false);
+                    // var response = await esvApi.getPassageText(
+                    //     selectedTags[index],
+                    //     include_short_copyright: false,
+                    //     include_copyright: false);
 
-                    print(response.passages.first);
-                    _showTestDialog(
-                        response.passages.first, response.canonical);
+                    // print(response.passages.first);
+                    // _showTestDialog(
+                    //     response.passages.first, response.canonical);
                   },
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
@@ -134,8 +123,7 @@ class NotificationDialogState extends State<NotificationDialog> {
           return AlertDialog(
             contentPadding: EdgeInsets.only(left: 25, right: 25),
             title: Center(child: Text(verse)),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
             content: Container(
               height: 200,
               width: 300,
@@ -190,13 +178,10 @@ class NotificationDialogState extends State<NotificationDialog> {
           child: Icon(Icons.close),
           onTap: () {
             //   Navigator.of(context).pop();
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Rout.home));
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Rout.home));
           },
         ),
-        title: Text(_anchors.length > 0
-            ? "${_anchors[0].day.name}/${_anchors[0].month.name}/${_anchors[0].year.name}"
-            : ""),
+        title: Text(_anchors.length > 0 ? "${_anchors[0].day.name}/${_anchors[0].month.name}/${_anchors[0].year.name}" : ""),
         centerTitle: true,
         actions: <Widget>[
           if (widget.type == "1")
@@ -207,13 +192,7 @@ class NotificationDialogState extends State<NotificationDialog> {
               ),
               onPressed: () {
                 // do something
-                _anchors.length > 0
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CommentsPage(_anchors[0].uuid)))
-                    : print("");
+                _anchors.length > 0 ? Navigator.push(context, MaterialPageRoute(builder: (context) => CommentsPage(_anchors[0].uuid))) : print("");
               },
             )
         ],
@@ -238,15 +217,15 @@ class NotificationDialogState extends State<NotificationDialog> {
             child: _anchors.length > 0
                 ? Html(
                     data: _anchors[0].description,
-                    onLinkTap: (url) {
-                      var uri = Uri.dataFromString(url);
-                      var uuid = uri.pathSegments[4];
-                      print(uuid);
-                      print("Opening $url...");
-                    },
-                    onImageTap: (src) {
-                      print(src);
-                    },
+                    // onLinkTap: (url) {
+                    //   var uri = Uri.dataFromString(url);
+                    //   var uuid = uri.pathSegments[4];
+                    //   print(uuid);
+                    //   print("Opening $url...");
+                    // },
+                    // onImageTap: (src) {
+                    //   print(src);
+                    // },
                     onImageError: (exception, stackTrace) {
                       print(exception);
                     },

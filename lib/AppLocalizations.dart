@@ -9,8 +9,7 @@ import 'package:nb_utils/nb_utils.dart';
 class AppLocalizations {
   final Locale locale;
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   AppLocalizations(this.locale);
 
@@ -24,8 +23,7 @@ class AppLocalizations {
 
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
-    String jsonString =
-        await rootBundle.loadString('lang/${locale.languageCode}.json');
+    String jsonString = await rootBundle.loadString('lang/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {
@@ -37,13 +35,11 @@ class AppLocalizations {
 
   // This method will be called from every widget which needs a localized text
   String translate(String key) {
-    return _localizedStrings[key]
-        .validate(value: 'Localization key is missing');
+    return _localizedStrings[key].validate(value: 'Localization key is missing');
   }
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   // This delegate instance will never change (it doesn't even have fields!)
   // It can provide a constant constructor.
   const _AppLocalizationsDelegate();

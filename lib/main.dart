@@ -247,37 +247,31 @@ class _CheckAuthState extends State<CheckAuth> {
     //   _platformVersion = platformVersion;
     // });
 
-    OneSignal.shared.init("8ad02ec3-83f1-4c85-920f-a13fb09e34b2", iOSSettings: {
-      OSiOSSettings.autoPrompt: false,
-      OSiOSSettings.inAppLaunchUrl: false
-    });
+    OneSignal.shared.setAppId("8ad02ec3-83f1-4c85-920f-a13fb09e34b2");
+    // ("8ad02ec3-83f1-4c85-920f-a13fb09e34b2", iOSSettings: {OSiOSSettings.autoPrompt: false, OSiOSSettings.inAppLaunchUrl: false});
     //Remove this method to stop OneSignal Debugging
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-    OneSignal.shared
-        .setInFocusDisplayType(OSNotificationDisplayType.notification);
+    // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    await OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
 
-    OneSignal.shared
-        .setNotificationReceivedHandler((OSNotification notification) {
-      // will be called whenever a notification is received
-      // print("clickedd2${notification.payload.additionalData}");
-      // var body = notification.payload.additionalData;
-      // var type = body["type"];
-      // var uuid = body["uuid"];
-      // print("clickedd3${uuid}");
-      // print("clickedd1${type}");
-    });
+    // OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
+    // will be called whenever a notification is received
+    // print("clickedd2${notification.payload.additionalData}");
+    // var body = notification.payload.additionalData;
+    // var type = body["type"];
+    // var uuid = body["uuid"];
+    // print("clickedd3${uuid}");
+    // print("clickedd1${type}");
+    // });
 
-    OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
       // will be called whenever a notification is opened/button pressed.
 
-      print("clickedd${result.notification.payload.additionalData}");
-      var body = result.notification.payload.additionalData;
+      print("clickedd${result.notification.additionalData}");
+      var body = result.notification.additionalData;
       var type = body["type"].toString();
       var uuid = body["uuid"].toString();
       print("clickedd3$uuid");
@@ -285,9 +279,7 @@ class _CheckAuthState extends State<CheckAuth> {
 
       if (type != null && uuid != null) {
         try {
-          MyApp.navigatorKey.currentState.push(MaterialPageRoute(
-              builder: (context) =>
-                  NotificationDialog(uuid: uuid, type: type)));
+          MyApp.navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => NotificationDialog(uuid: uuid, type: type)));
         } catch (e) {
           print(e.toString());
         }
@@ -299,14 +291,12 @@ class _CheckAuthState extends State<CheckAuth> {
       // (ie. user taps Allow on the permission prompt in iOS)
     });
 
-    OneSignal.shared
-        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+    OneSignal.shared.setSubscriptionObserver((OSSubscriptionStateChanges changes) {
       // will be called whenever the subscription changes
       //(ie. user gets registered with OneSignal and gets a user ID)
     });
 
-    OneSignal.shared.setEmailSubscriptionObserver(
-        (OSEmailSubscriptionStateChanges emailChanges) {
+    OneSignal.shared.setEmailSubscriptionObserver((OSEmailSubscriptionStateChanges emailChanges) {
       // will be called whenever then user's email subscription changes
       // (ie. OneSignal.setEmail(email) is called and the user gets registered
     });
@@ -315,8 +305,7 @@ class _CheckAuthState extends State<CheckAuth> {
 
 // If you want to know if the user allowed/denied permission,
 // the function returns a Future<bool>:
-    bool allowed =
-        await OneSignal.shared.promptUserForPushNotificationPermission();
+    bool allowed = await OneSignal.shared.promptUserForPushNotificationPermission();
   }
 
   void _handleGetTags() {
@@ -351,11 +340,11 @@ class _CheckAuthState extends State<CheckAuth> {
 
   void _handleGetPermissionSubscriptionState() {
     print("Getting permissionSubscriptionState");
-    OneSignal.shared.getPermissionSubscriptionState().then((status) {
-      this.setState(() {
-        _debugLabelString = status.jsonRepresentation();
-      });
-    });
+    // OneSignal.shared.getPermissionSubscriptionState().then((status) {
+    //   this.setState(() {
+    //     _debugLabelString = status.jsonRepresentation();
+    //   });
+    // });
   }
 
   void _handleSetEmail() {
@@ -425,44 +414,34 @@ class _CheckAuthState extends State<CheckAuth> {
   }
 
   void _handleSendNotification() async {
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    // var status = await OneSignal.shared.getPermissionSubscriptionState();
 
-    var playerId = status.subscriptionStatus.userId;
+    // var playerId = status.subscriptionStatus.userId;
 
-    var imgUrlString =
-        "http://cdn1-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-2.jpg";
+    // var imgUrlString = "http://cdn1-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-2.jpg";
 
-    var notification = OSCreateNotification(
-        playerIds: [playerId],
-        content: "this is a test from OneSignal's Flutter SDK",
-        heading: "Test Notification",
-        iosAttachments: {"id1": imgUrlString},
-        bigPicture: imgUrlString,
-        buttons: [
-          OSActionButton(text: "test1", id: "id1"),
-          OSActionButton(text: "test2", id: "id2")
-        ]);
+    // var notification =
+    //     OSCreateNotification(playerIds: [playerId], content: "this is a test from OneSignal's Flutter SDK", heading: "Test Notification", iosAttachments: {"id1": imgUrlString}, bigPicture: imgUrlString, buttons: [OSActionButton(text: "test1", id: "id1"), OSActionButton(text: "test2", id: "id2")]);
 
-    var response = await OneSignal.shared.postNotification(notification);
+    // var response = await OneSignal.shared.postNotification(notification);
 
-    this.setState(() {
-      _debugLabelString = "Sent notification with response: $response";
-    });
+    // this.setState(() {
+    //   _debugLabelString = "Sent notification with response: $response";
+    // });
   }
 
   void _handleSendSilentNotification() async {
-    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    // var status = await OneSignal.shared.getPermissionSubscriptionState();
 
-    var playerId = status.subscriptionStatus.userId;
+    // var playerId = status.subscriptionStatus.userId;
 
-    var notification = OSCreateNotification.silentNotification(
-        playerIds: [playerId], additionalData: {'test': 'value'});
+    // var notification = OSCreateNotification.silentNotification(playerIds: [playerId], additionalData: {'test': 'value'});
 
-    var response = await OneSignal.shared.postNotification(notification);
+    // var response = await OneSignal.shared.postNotification(notification);
 
-    this.setState(() {
-      _debugLabelString = "Sent notification with response: $response";
-    });
+    // this.setState(() {
+    //   _debugLabelString = "Sent notification with response: $response";
+    // });
   }
 
   oneSignalInAppMessagingTriggerExamples() async {
@@ -484,8 +463,7 @@ class _CheckAuthState extends State<CheckAuth> {
     OneSignal.shared.removeTriggerForKey("trigger_2");
 
     // Get the value for a trigger by its key
-    Object triggerValue =
-        await OneSignal.shared.getTriggerValueForKey("trigger_3");
+    Object triggerValue = await OneSignal.shared.getTriggerValueForKey("trigger_3");
     print("'trigger_3' key trigger value: " + triggerValue.toString());
 
     // Create a list and bulk remove triggers based on keys supplied
@@ -553,9 +531,7 @@ class _CheckAuthState extends State<CheckAuth> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 

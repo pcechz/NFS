@@ -28,15 +28,11 @@ class _BulletinPageState extends State<BulletinPage> {
   }
 
   Future<void> _populateAnchors() async {
-    final http.Response response =
-        await http.get("https://nifes.org.ng/api/mobile/bulletin/index");
+    final http.Response response = await http.get(Uri.parse("https://nifes.org.ng/api/mobile/bulletin/index"));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['bulletins'].forEach((newsDetail) {
-      final Anchors news = Anchors(
-          description: newsDetail['description'],
-          uuid: newsDetail['uuid'],
-          createdAt: newsDetail['created_at']);
+      final Anchors news = Anchors(description: newsDetail['description'], uuid: newsDetail['uuid'], createdAt: newsDetail['created_at']);
       setState(() {
         _anchors.add(news);
       });
@@ -75,15 +71,15 @@ class _BulletinPageState extends State<BulletinPage> {
                 //   networkSourceMatcher():
                 //       networkImageRender(altWidget: (_) => FlutterLogo()),
                 // },
-                onLinkTap: (url) {
-                  var uri = Uri.dataFromString(url);
-                  var uuid = uri.pathSegments[4];
-                  print(uuid);
-                  print("Opening $url...");
-                },
-                onImageTap: (src) {
-                  print(src);
-                },
+                // onLinkTap: (url) {
+                //   var uri = Uri.dataFromString(url);
+                //   var uuid = uri.pathSegments[4];
+                //   print(uuid);
+                //   print("Opening $url...");
+                // },
+                // onImageTap: (src) {
+                //   print(src);
+                // },
                 onImageError: (exception, stackTrace) {
                   print(exception);
                 },

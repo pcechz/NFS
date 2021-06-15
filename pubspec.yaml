@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -23,82 +23,61 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations: # Add this line
-    sdk: flutter         # Add this line
-
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.1
-  url_launcher: ^5.4.0
-  photo_view: ^0.9.2
-  flutter_reorderable_list: ^0.1.3
-  flutter_svg: ^0.20.0-nullsafety.3
-  cached_network_image: ^2.3.3
-  sliding_up_panel: ^1.0.2
-  shared_preferences: ^0.5.6+1
-  http: ^0.12.0+4
-  hive: ^1.4.4
-  hive_flutter: ^0.3.1
-  dio: ^3.0.10
-  dio_http_cache: ^0.2.11
-  json_annotation: ^3.1.1
-  flutter_riverpod: ^0.12.1
-  intl: ^0.17.0
-  table_calendar: ^2.3.3
-  intl_phone_number_input: ^0.6.0
-  nb_utils: ^3.3.0+1
-  flutter_vector_icons: ^1.0.0
-  flutter_mobx: ^2.0.0
-  share: ^2.0.1
-  flutter_html: ^1.3.0
-  country_code_picker: ^2.0.1
-  otp_text_field: ^1.1.0
-  flutter_tts: ^3.0.0
-  geolocator: ^6.1.6
-  package_info: ^0.4.0+14
-  toast: ^0.1.5
-  flutter_speed_dial: ^3.0.5
-  getwidget: ^1.2.4
-  font_awesome_flutter: ^8.8.1
-  path_provider: any
-  queries: any
-  xml: any
-  rxdart: ^0.23.1
-  global_configuration: any
-  flutter_slidable: any
+  flutter_localizations:
+    sdk: flutter
   after_layout: any
-  material_design_icons_flutter: ^3.2.3595 
-  ff_navigation_bar: ^0.1.5
-  flutter_staggered_grid_view: ^0.3.0
-  flutter_dotenv: ^2.1.0
-  transparent_image: ^1.0.0
-  story_view: any
-  webview_flutter: any
-  webviewx: any
-  skeleton_loader: ^1.0.2+3
+  cached_network_image: ^2.3.3
   comment_box: ^0.0.15
-  esv_api: ^0.1.3
-  flutter_tags: "^0.4.9+1"
+  country_code_picker: ^2.0.1
+  cupertino_icons: ^1.0.1
+  dio: ^4.0.0
+  # ff_navigation_bar: ^0.1.5
+  flutter_dotenv: ^5.0.0
   flutter_easyloading: ^3.0.0
-  settings_ui: any
-  onesignal_flutter: ^2.6.3
-  meet_network_image: ^0.1.2
+  flutter_html: ^2.1.0
   flutter_inappwebview: ^5.3.2
-
-  
-
-
-  
-
-
-
-
-
-
-  # lidea:
-  #   path: /lidea
+  flutter_mobx: ^2.0.0
+  flutter_reorderable_list: ^1.0.0
+  flutter_riverpod: ^0.12.1
+  flutter_slidable: any
+  flutter_speed_dial: ^3.0.5
+  flutter_staggered_grid_view: ^0.4.0
+  flutter_svg: ^0.22.0
+  flutter_tags: ^0.4.9+1
+  flutter_tts: ^3.0.0
+  flutter_vector_icons: ^1.0.0
+  font_awesome_flutter: ^9.1.0
+  geolocator: ^6.1.6
+  # getwidget: ^2.0.2
+  global_configuration: any
+  hive: ^2.0.4
+  hive_flutter: ^1.0.0
+  http: ^0.13.3
+  intl: ^0.17.0
+  intl_phone_number_input: ^0.6.0
+  json_annotation: ^3.1.1
+  material_design_icons_flutter: ^4.0.5955
+  nb_utils: ^4.3.0+3
+  onesignal_flutter: ^3.0.0
+  # otp_text_field: ^1.1.0
+  package_info: ^2.0.2
+  # path_provider: any
+  photo_view: ^0.11.1
+  queries: any
+  rxdart: ^0.24.1
+  settings_ui: any
+  share: ^2.0.1
+  shared_preferences: ^2.0.6
+  skeleton_loader: ^1.0.2+3
+  sliding_up_panel: ^2.0.0+1
+  story_view: any
+  table_calendar: ^3.0.0
+  toast: ^0.1.5
+  transparent_image: ^2.0.0
+  url_launcher: ^6.0.5
+  webview_flutter: any
+  # webviewx: ^0.1.0
+  # xml: any
 
 module:
   androidX: true
@@ -106,32 +85,28 @@ module:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.6
+  build_runner: null
+  faker: null
+  hive_generator: null
   json_serializable: ^3.5.0
-  hive_generator: ^0.8.2
-  pedantic: ^1.9.2
-  faker: any  
-  # flutter_launcher_icons: any
-  mockito: any
+  mockito: null
+  pedantic: null
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
 
   assets:
     - assets/cfg/
     #- resources/BibleDb.db
     - resources/esv.xml
     - resources/xml/
-    - resources/raw/ 
+    - resources/raw/
     - assets/book.json
     - assets/images/matta_pic_1.jpg
     - assets/images/matta_pic_2.jpg
@@ -200,19 +175,14 @@ flutter:
 
         - asset: assets/fonts/CircularStd-Bold.ttf
           weight: 900
-
-
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

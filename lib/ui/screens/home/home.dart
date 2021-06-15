@@ -60,17 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Category> categories = [
     Category(name: 'Anchor', color: AppColors.teal, route: Routes.expandable),
     Category(name: 'NVM', color: AppColors.red, route: Routes.expandable),
-    Category(
-        name: 'NIFES Updates', color: AppColors.blue, route: Routes.expandable),
+    Category(name: 'NIFES Updates', color: AppColors.blue, route: Routes.expandable),
     Category(name: 'Bible', color: AppColors.yellow, route: Routes.pokedex),
-    Category(
-        name: 'Prayer Bulletin',
-        color: AppColors.purple,
-        route: Routes.bulletin),
-    Category(
-        name: 'Land of Promise',
-        color: AppColors.brown,
-        route: Routes.expandable),
+    Category(name: 'Prayer Bulletin', color: AppColors.purple, route: Routes.bulletin),
+    Category(name: 'Land of Promise', color: AppColors.brown, route: Routes.expandable),
   ];
   List<Advert> adverts = List<Advert>();
 
@@ -125,8 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //       setState(() => {adverts = newsArticles})
     //     });
 
-    final http.Response response =
-        await http.get(Constants.HEADLINE_ADVERT_URL);
+    final http.Response response = await http.get(Uri.parse(Constants.HEADLINE_ADVERT_URL));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['data'].forEach((newsDetail) {
@@ -135,8 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
           id: newsDetail['id'],
           title: newsDetail['title'] ?? "",
           descrption: newsDetail['body'] ?? "",
-          urlToImage:
-              newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
+          urlToImage: newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           // 'https://nifes.org.ng/' + newsDetail['image'].substring(19) ??
           // Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           slug: newsDetail['slug'],
@@ -149,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _populatePosts() async {
-    final http.Response response = await http.get(Constants.HEADLINE_NEWS_URL);
+    final http.Response response = await http.get(Uri.parse(Constants.HEADLINE_NEWS_URL));
     final Map<String, dynamic> responseData = json.decode(response.body);
 
     responseData['data'].forEach((newsDetail) {
@@ -157,8 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final Blog news = Blog(
           name: newsDetail['title'],
           content: newsDetail['body'],
-          imageUrl:
-              newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
+          imageUrl: newsDetail['image'] ?? Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           // 'https://nifes.org.ng/' + newsDetail['image'].substring(19) ??
           // Constants.NEWS_PLACEHOLDER_IMAGE_ASSET_URL,
           slug: newsDetail['slug'],
@@ -195,11 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PokeNews _buildItemsForListView(BuildContext context, int index) {
     //print("the img-${_newsArticles[0].imageUrl}");
-    return PokeNews(
-        title: _newsArticles[index].name ?? "",
-        time: _newsArticles[index].created_at ?? "",
-        thumbnail: _newsArticles[index].imageUrl ?? "",
-        blog: _newsArticles[index]);
+    return PokeNews(title: _newsArticles[index].name ?? "", time: _newsArticles[index].created_at ?? "", thumbnail: _newsArticles[index].imageUrl ?? "", blog: _newsArticles[index]);
   }
 
   // ListTile _buildItemsForListView(BuildContext context, int index) {
@@ -286,8 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => BlogHomeScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BlogHomeScreen()));
             },
           ),
         ],
@@ -345,50 +330,29 @@ class _HomeScreenState extends State<HomeScreen> {
             new ListTile(
               title: new Text("Anchor"),
               trailing: new Icon(Icons.anchor),
-              onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ListPage(type: 1)))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => ListPage(type: 1)))},
             ),
             new ListTile(
               title: new Text("Associate and Student portal"),
               trailing: new Icon(Icons.group),
               //WebViewPage(
               // "https://nifes.org.ng/elearning", "NVM")));
-              onTap: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => WebViewPage(
-                            "https://nifes.org.ng/login",
-                            "Associate/Student portal")))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage("https://nifes.org.ng/login", "Associate/Student portal")))},
             ),
             new ListTile(
               title: new Text("prayer bulletin"),
               trailing: new Icon(Icons.book),
-              onTap: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AnchorsPage(type: 2)))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => AnchorsPage(type: 2)))},
             ),
             new ListTile(
               title: new Text("Updates"),
               trailing: new Icon(Icons.update),
-              onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => UpdatesPage()))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatesPage()))},
             ),
             new ListTile(
               title: new Text("Blog"),
               trailing: new Icon(Icons.book),
-              onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => BlogHomeScreen()))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => BlogHomeScreen()))},
             ),
             // new ListTile(
             //   title: new Text("Portal interaction"),
@@ -398,13 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
             new ListTile(
               title: new Text("Settings"),
               trailing: new Icon(Icons.settings),
-              onTap: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SettingsScreen(name, email, phone, id)))
-              },
+              onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen(name, email, phone, id)))},
             ),
             new Divider(),
             new ListTile(
@@ -418,8 +376,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: NestedScrollView(
         controller: _scrollController,
         headerSliverBuilder: (_, __) => [
-          _HeaderAppBar(
-              height: appBarHeight, showTitle: showTitle, category: categories),
+          _HeaderAppBar(height: appBarHeight, showTitle: showTitle, category: categories),
         ],
         body: ListView(
           physics: BouncingScrollPhysics(),
@@ -438,8 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: _isLoading
                           ? SkeletonLoader(
                               builder: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
+                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                                 child: Row(
                                   children: <Widget>[
                                     CircleAvatar(
@@ -475,40 +431,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           : Container(
                               height: 200,
                               decoration: BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.white, width: 1),
-                                    right: BorderSide(
-                                        color: Colors.green, width: 5),
-                                    left: BorderSide(
-                                        color: Colors.purple, width: 5)),
+                                border: Border(top: BorderSide(color: Colors.white, width: 1), right: BorderSide(color: Colors.green, width: 5), left: BorderSide(color: Colors.purple, width: 5)),
                               ),
                               child: Column(
                                 children: <Widget>[
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        5.0, 10.0, 5.0, 5.0),
+                                    padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
                                   ),
-                                  Text("Daily Anchor",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
-                                  Text(
-                                      _verses.length > 0
-                                          ? _parseHtmlString(
-                                              _verses[0].descrption)
-                                          : "",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.white,
-                                          fontStyle: FontStyle.italic)),
-                                  Text(
-                                      _verses.length > 0
-                                          ? _verses[0].urlToImage
-                                          : " ",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white)),
+                                  Text("Daily Anchor", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                                  Text(_verses.length > 0 ? _parseHtmlString(_verses[0].descrption) : "", style: TextStyle(fontWeight: FontWeight.normal, color: Colors.white, fontStyle: FontStyle.italic)),
+                                  Text(_verses.length > 0 ? _verses[0].urlToImage : " ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                                 ],
                               ),
                             ))
@@ -519,8 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _isLoading
                 ? SkeletonLoader(
                     builder: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       child: Row(
                         children: <Widget>[
                           CircleAvatar(
@@ -599,8 +530,7 @@ class _HomeScreenState extends State<HomeScreen> {
     localStorage.remove('user');
     localStorage.remove('token');
     //localStorage.clear();
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Rout.login));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Rout.login));
     // } else {
     //   _showMsg(body['message']);
     // }
