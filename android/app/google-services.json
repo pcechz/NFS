@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1009794164719",
+    "project_id": "nifes-a7320",
+    "storage_bucket": "nifes-a7320.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009794164719:android:7f25900b411f3abcfc781a",
+        "android_client_info": {
+          "package_name": "com.nfs.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009794164719-7kujs7dcs3ogkskkccbugc80vq1jta35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAswQyiLgXdiv-RDALT9bs-97v3W5BrvKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009794164719-7kujs7dcs3ogkskkccbugc80vq1jta35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1009794164719:android:5176a8ab341618b3fc781a",
+        "android_client_info": {
+          "package_name": "com.nifesapp.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1009794164719-7kujs7dcs3ogkskkccbugc80vq1jta35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAswQyiLgXdiv-RDALT9bs-97v3W5BrvKA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1009794164719-7kujs7dcs3ogkskkccbugc80vq1jta35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
