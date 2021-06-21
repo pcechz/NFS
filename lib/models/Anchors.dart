@@ -2,6 +2,11 @@ class Anchors {
   String uuid;
   String description;
   String verses;
+  String prayers;
+  String topic;
+  String bibleReading;
+  String wordOFToday;
+  String oneYear;
   Year year;
   Year month;
   Year day;
@@ -12,6 +17,11 @@ class Anchors {
       {this.uuid,
       this.description,
       this.verses,
+      this.bibleReading,
+      this.prayers,
+      this.oneYear,
+      this.wordOFToday,
+      this.topic,
       this.year,
       this.month,
       this.day,
@@ -21,6 +31,11 @@ class Anchors {
   Anchors.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
     description = json['description'];
+    prayers = json['prayers'] ?? "";
+    bibleReading = json['bible_reading'] ?? "";
+    oneYear = json['one_year'] ?? "";
+    wordOFToday = json['word_of_today'] ?? "";
+    topic = json['topic'] ?? "";
     verses = json['verses'];
     year = json['year'] != null ? new Year.fromJson(json['year']) : null;
     month = json['month'] != null ? new Year.fromJson(json['month']) : null;
@@ -37,6 +52,24 @@ class Anchors {
     if (this.year != null) {
       data['year'] = this.year.toJson();
     }
+
+    if (this.prayers != null) {
+      data['prayers'] = this.prayers;
+    }
+    if (this.topic != null) {
+      data['topic'] = this.topic;
+    }
+    if (this.wordOFToday != null) {
+      data['word_of_today'] = this.wordOFToday;
+    }
+    if (this.oneYear != null) {
+      data['one_year'] = this.oneYear;
+    }
+
+    if (this.bibleReading != null) {
+      data['bible_reading'] = this.bibleReading;
+    }
+
     if (this.month != null) {
       data['month'] = this.month.toJson();
     }

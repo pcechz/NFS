@@ -39,7 +39,9 @@ class NotificationDialogState extends State<NotificationDialog> {
 
   Future<void> _populateAnchors(String type, String uuid) async {
     var url = "";
-    type == "1" ? url = "https://nifes.org.ng/api/mobile/anchor/showid/$uuid" : url = "https://nifes.org.ng/api/mobile/bulletin/showid/$uuid";
+    type == "1"
+        ? url = "https://nifes.org.ng/api/mobile/anchor/showid/$uuid"
+        : url = "https://nifes.org.ng/api/mobile/bulletin/showid/$uuid";
 
     final http.Response response = await http.get(Uri.parse(url));
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -48,7 +50,14 @@ class NotificationDialogState extends State<NotificationDialog> {
     if (token != null) {
       print("heeeee1");
       responseData[type == "1" ? 'anchors' : 'bulletins'].forEach((newsDetail) {
-        final Anchors news = Anchors(description: newsDetail['description'], verses: newsDetail['verses'], uuid: newsDetail['uuid'], createdAt: newsDetail['created_at'], year: Year.fromJson(newsDetail['year']), month: Year.fromJson(newsDetail['month']), day: Year.fromJson(newsDetail['day']));
+        final Anchors news = Anchors(
+            description: newsDetail['description'],
+            verses: newsDetail['verses'],
+            uuid: newsDetail['uuid'],
+            createdAt: newsDetail['created_at'],
+            year: Year.fromJson(newsDetail['year']),
+            month: Year.fromJson(newsDetail['month']),
+            day: Year.fromJson(newsDetail['day']));
 
         // if (mounted)
         setState(() {
@@ -56,7 +65,9 @@ class NotificationDialogState extends State<NotificationDialog> {
           // _isLoading = false;
           if (_anchors.length > 0) {
             print("heeeee");
-            selectedTags = _anchors[0].verses.length > 0 ? _anchors[0].verses.split(",") : null;
+            selectedTags = _anchors[0].verses.length > 0
+                ? _anchors[0].verses.split(",")
+                : null;
             // Navigator.push(
             //     context,
             //     MaterialPageRoute(
@@ -123,7 +134,8 @@ class NotificationDialogState extends State<NotificationDialog> {
           return AlertDialog(
             contentPadding: EdgeInsets.only(left: 25, right: 25),
             title: Center(child: Text(verse)),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
             content: Container(
               height: 200,
               width: 300,
@@ -178,10 +190,13 @@ class NotificationDialogState extends State<NotificationDialog> {
           child: Icon(Icons.close),
           onTap: () {
             //   Navigator.of(context).pop();
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Rout.home));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Rout.home));
           },
         ),
-        title: Text(_anchors.length > 0 ? "${_anchors[0].day.name}/${_anchors[0].month.name}/${_anchors[0].year.name}" : ""),
+        title: Text(_anchors.length > 0
+            ? "${_anchors[0].day.name}/${_anchors[0].month.name}/${_anchors[0].year.name}"
+            : ""),
         centerTitle: true,
         actions: <Widget>[
           if (widget.type == "1")
@@ -192,7 +207,13 @@ class NotificationDialogState extends State<NotificationDialog> {
               ),
               onPressed: () {
                 // do something
-                _anchors.length > 0 ? Navigator.push(context, MaterialPageRoute(builder: (context) => CommentsPage(_anchors[0].uuid))) : print("");
+                _anchors.length > 0
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CommentsPage(_anchors[0].uuid)))
+                    : print("");
               },
             )
         ],

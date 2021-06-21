@@ -30,14 +30,14 @@ class _UpdateDetailsState extends State<UpdateDetails> {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: Text("${widget.lesson.title}"),
+        title: Text("${widget.lesson.title ?? ""}"),
         centerTitle: true,
       ),
       body: Container(
         padding: EdgeInsets.all(30),
         child: SingleChildScrollView(
             child: Html(
-          data: widget.lesson.descrption,
+          data: widget.lesson.descrption ?? "",
           //Optional parameters:
           // customImageRenders: {
           //   networkSourceMatcher(domains: ["flutter.dev"]):

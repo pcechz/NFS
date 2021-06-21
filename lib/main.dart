@@ -255,7 +255,8 @@ class _CheckAuthState extends State<CheckAuth> {
     // OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
 
 // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
-    await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
+    await OneSignal.shared
+        .promptUserForPushNotificationPermission(fallbackToSettings: true);
 
     // OneSignal.shared.setNotificationReceivedHandler((OSNotification notification) {
     // will be called whenever a notification is received
@@ -267,7 +268,8 @@ class _CheckAuthState extends State<CheckAuth> {
     // print("clickedd1${type}");
     // });
 
-    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
       // will be called whenever a notification is opened/button pressed.
 
       print("clickedd${result.notification.additionalData}");
@@ -279,7 +281,9 @@ class _CheckAuthState extends State<CheckAuth> {
 
       if (type != null && uuid != null) {
         try {
-          MyApp.navigatorKey.currentState.push(MaterialPageRoute(builder: (context) => NotificationDialog(uuid: uuid, type: type)));
+          MyApp.navigatorKey.currentState.push(MaterialPageRoute(
+              builder: (context) =>
+                  NotificationDialog(uuid: uuid, type: type)));
         } catch (e) {
           print(e.toString());
         }
@@ -291,12 +295,14 @@ class _CheckAuthState extends State<CheckAuth> {
       // (ie. user taps Allow on the permission prompt in iOS)
     });
 
-    OneSignal.shared.setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+    OneSignal.shared
+        .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
       // will be called whenever the subscription changes
       //(ie. user gets registered with OneSignal and gets a user ID)
     });
 
-    OneSignal.shared.setEmailSubscriptionObserver((OSEmailSubscriptionStateChanges emailChanges) {
+    OneSignal.shared.setEmailSubscriptionObserver(
+        (OSEmailSubscriptionStateChanges emailChanges) {
       // will be called whenever then user's email subscription changes
       // (ie. OneSignal.setEmail(email) is called and the user gets registered
     });
@@ -305,7 +311,8 @@ class _CheckAuthState extends State<CheckAuth> {
 
 // If you want to know if the user allowed/denied permission,
 // the function returns a Future<bool>:
-    bool allowed = await OneSignal.shared.promptUserForPushNotificationPermission();
+    bool allowed =
+        await OneSignal.shared.promptUserForPushNotificationPermission();
   }
 
   void _handleGetTags() {
@@ -463,7 +470,8 @@ class _CheckAuthState extends State<CheckAuth> {
     OneSignal.shared.removeTriggerForKey("trigger_2");
 
     // Get the value for a trigger by its key
-    Object triggerValue = await OneSignal.shared.getTriggerValueForKey("trigger_3");
+    Object triggerValue =
+        await OneSignal.shared.getTriggerValueForKey("trigger_3");
     print("'trigger_3' key trigger value: " + triggerValue.toString());
 
     // Create a list and bulk remove triggers based on keys supplied
@@ -531,7 +539,9 @@ class _CheckAuthState extends State<CheckAuth> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext context) {
-    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
 
