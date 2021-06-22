@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:app/model/lesson.dart';
+import 'package:html/parser.dart';
 import 'package:app/models/Anchors.dart';
 import 'package:app/ui/screens/home/widgets/CommentsPage.dart';
 import 'parallax_component.dart';
@@ -130,6 +132,183 @@ class _ParallaxPageState extends State<ParallaxPage> {
         });
   }
 
+  Container makeBody() {
+    return widget.type == 2
+        ? Container(
+            // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
+
+            child: SingleChildScrollView(
+                child: Html(
+            data: widget.lesson.description,
+            //Optional parameters:
+            // customImageRenders: {
+            //   networkSourceMatcher(domains: ["flutter.dev"]):
+            //       (context, attributes, element) {
+            //     return FlutterLogo(size: 36);
+            //   },
+            //   networkSourceMatcher(domains: ["mydomain.com"]): networkImageRender(
+            //     headers: {"Custom-Header": "some-value"},
+            //     altWidget: (alt) => Text(alt),
+            //     loadingWidget: () => Text("Loading..."),
+            //   ),
+            //   // On relative paths starting with /wiki, prefix with a base url
+            //   (attr, _) => attr["src"] != null && attr["src"].startsWith("/wiki"):
+            //       networkImageRender(
+            //           mapUrl: (url) => "https://upload.wikimedia.org" + url),
+            //   // Custom placeholder image for broken links
+            //   networkSourceMatcher():
+            //       networkImageRender(altWidget: (_) => FlutterLogo()),
+            // },
+            // onLinkTap: (url) {
+            //   var uri = Uri.dataFromString(url);
+            //   var uuid = uri.pathSegments[4];
+            //   print(uuid);
+            //   print("Opening $url...");
+            // },
+            // onImageTap: (src) {
+            //   print(src);
+            // },
+            onImageError: (exception, stackTrace) {
+              print(exception);
+            },
+          )))
+        : Container(
+            child: Stack(children: <Widget>[
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Card(
+                      color: Colors.white.withOpacity(0.5),
+                      elevation: 5,
+                      margin: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Container(
+                        height: 150,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
+                            ),
+                            Text("Topic",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black.withOpacity(0.5))),
+                            AutoSizeText(
+                              widget.lesson.topic.length > 0
+                                  ? _parseHtmlString(widget.lesson.topic)
+                                  : "",
+                              style: TextStyle(
+                                  fontSize: 23,
+                                  color: Colors.white.withOpacity(0.5)),
+                              minFontSize: 8,
+                              maxLines: 4,
+                            ),
+                          ],
+                        ),
+                      )),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 10.0),
+                  ),
+                  Card(
+                      color: Colors.black.withOpacity(0.5),
+                      elevation: 5,
+                      margin: EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 10.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Container(
+                        height: 50,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
+                            ),
+                            Text("Bible Reading",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black.withOpacity(0.5))),
+                            AutoSizeText(
+                              widget.lesson.bibleReading.length > 0
+                                  ? _parseHtmlString(widget.lesson.bibleReading)
+                                  : "",
+                              style:
+                                  TextStyle(fontSize: 11, color: Colors.white),
+                              minFontSize: 6,
+                              maxLines: 3,
+                            ),
+                          ],
+                        ),
+                      )),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 10.0),
+                  ),
+                  Card(
+                      color: Colors.purple.withOpacity(0.5),
+                      elevation: 5,
+                      margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(color: Colors.white, width: 1),
+                              right: BorderSide(color: Colors.green, width: 5),
+                              left: BorderSide(color: Colors.purple, width: 5)),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 5.0),
+                            ),
+                            Text("Word Of Today",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+
+                            AutoSizeText(
+                              widget.lesson.wordOFToday.length > 0
+                                  ? _parseHtmlString(widget.lesson.wordOFToday)
+                                  : "",
+                              minFontSize: 12,
+                              maxLines: 10,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic),
+                            )
+                            // Text(
+
+                            //     widget.lesson.wordOFToday.length > 0
+                            //         ? _parseHtmlString(
+                            //             widget.lesson.wordOFToday)
+                            //         : "",
+                            //     style: TextStyle(
+                            //         fontWeight: FontWeight.normal,
+
+                            //         color: Colors.white,
+                            //         fontStyle: FontStyle.italic)),
+                            // //  Text(_verses.length > 0 ? _verses[0].urlToImage : " ", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+                          ],
+                        ),
+                      ))
+                ],
+              ),
+            ),
+          ]));
+  }
+
+  String _parseHtmlString(String htmlString) {
+    final document = parse(htmlString);
+    final String parsedString = parse(document.body.text).documentElement.text;
+
+    return parsedString;
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -170,44 +349,7 @@ class _ParallaxPageState extends State<ParallaxPage> {
         child: Icon(Icons.library_books),
         backgroundColor: Colors.blue[900],
       ),
-      body: Container(
-        padding: EdgeInsets.all(30),
-        child: SingleChildScrollView(
-            child: Html(
-          data: widget.lesson.description,
-          //Optional parameters:
-          // customImageRenders: {
-          //   networkSourceMatcher(domains: ["flutter.dev"]):
-          //       (context, attributes, element) {
-          //     return FlutterLogo(size: 36);
-          //   },
-          //   networkSourceMatcher(domains: ["mydomain.com"]): networkImageRender(
-          //     headers: {"Custom-Header": "some-value"},
-          //     altWidget: (alt) => Text(alt),
-          //     loadingWidget: () => Text("Loading..."),
-          //   ),
-          //   // On relative paths starting with /wiki, prefix with a base url
-          //   (attr, _) => attr["src"] != null && attr["src"].startsWith("/wiki"):
-          //       networkImageRender(
-          //           mapUrl: (url) => "https://upload.wikimedia.org" + url),
-          //   // Custom placeholder image for broken links
-          //   networkSourceMatcher():
-          //       networkImageRender(altWidget: (_) => FlutterLogo()),
-          // },
-          // onLinkTap: (url) {
-          //   var uri = Uri.dataFromString(url);
-          //   var uuid = uri.pathSegments[4];
-          //   print(uuid);
-          //   print("Opening $url...");
-          // },
-          // onImageTap: (src) {
-          //   print(src);
-          // },
-          onImageError: (exception, stackTrace) {
-            print(exception);
-          },
-        )),
-      ),
+      body: Container(padding: EdgeInsets.all(30), child: makeBody()),
     );
   }
 }
