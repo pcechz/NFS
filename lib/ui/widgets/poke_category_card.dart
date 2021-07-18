@@ -1,3 +1,5 @@
+import 'package:app/models/Anchors.dart';
+import 'package:app/pages/details/parallax_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:app/Feature/Reader/bible_bloc.dart';
@@ -25,12 +27,16 @@ import 'package:app/ui/screens/home/wikipedia_explorer.dart';
 
 class PokeCategoryCard extends StatelessWidget {
   const PokeCategoryCard(
-    this.category, {
+    this.category,
+    this.anchors,
+    this.bulletins, {
     this.onPress,
   });
 
   final Category category;
   final Function onPress;
+  final Anchors anchors;
+  final Anchors bulletins;
 
   Widget _buildCircleDecoration({@required double height}) {
     return Positioned(
@@ -113,12 +119,14 @@ class PokeCategoryCard extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ListPage(type: 1)));
+                            builder: (context) =>
+                                ParallaxPage(lesson: anchors, type: 1)));
                   } else if (category.name == "Prayer Bulletin") {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AnchorsPage(type: 2)));
+                            builder: (context) =>
+                                ParallaxPage(lesson: bulletins, type: 2)));
                   } else if (category.name == "Bible") {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => BiblePage()));

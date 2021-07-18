@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:app/model/BibleVerse.dart';
+import 'package:app/pages/lists/anchors_page.dart';
+import 'package:app/pages/lists/lists.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_tags/flutter_tags.dart';
+import 'package:http/http.dart' as http;
 import 'package:app/model/lesson.dart';
 import 'package:html/parser.dart';
 import 'package:app/models/Anchors.dart';
@@ -20,6 +26,7 @@ class ParallaxPage extends StatefulWidget {
 
 class _ParallaxPageState extends State<ParallaxPage> {
   List<String> selectedTags = [];
+  List<BibleVerse> _verses = List<BibleVerse>();
 
   @override
   void initState() {
@@ -27,6 +34,30 @@ class _ParallaxPageState extends State<ParallaxPage> {
     print("theverse+${widget.lesson.verses}");
     if (widget.lesson.verses != null) {
       selectedTags = widget.lesson.verses.split(",");
+    }
+  }
+
+  Future<void> _populateAnchors(String pass) async {
+    var finalpass = pass.replaceAll(" ", "");
+    final http.Response response =
+        await http.get(Uri.parse("https://bible-api.com/$finalpass"));
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    responseData['verses'].forEach((newsDetail) {
+      final BibleVerse news = BibleVerse(
+          bookId: newsDetail['book_id'],
+          bookName: newsDetail['book_name'],
+          chapter: newsDetail['chapter'],
+          verse: newsDetail['verse'],
+          text: newsDetail['text']);
+      setState(() {
+        _verses.add(news);
+      });
+    });
+    //_showTestDialog(bible: _);
+    if (_verses.length > 0) {
+      // print(_verses[0].);
+      _showDialog(_verses, pass);
     }
   }
 
@@ -48,6 +79,7 @@ class _ParallaxPageState extends State<ParallaxPage> {
                   activeColor: Colors.red,
                   onPressed: (Item item) async {
                     print('pressed');
+                    _populateAnchors(selectedTags[index]);
                     // var esvApi =
                     //     ESVAPI('4cd7d044d7310d15b6ca4a233c1f44ed5a6de17e');
 
@@ -75,7 +107,7 @@ class _ParallaxPageState extends State<ParallaxPage> {
           );
   }
 
-  void _showTestDialog(String bible, String verse) {
+  void _showDialog(List<BibleVerse> bible, String verse) {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -87,17 +119,19 @@ class _ParallaxPageState extends State<ParallaxPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
             content: Container(
-              height: 200,
+              height: 500,
               width: 300,
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(bible),
-                  ],
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: _verses.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                        child: Text(
+                            '${_verses[index].verse}. ${_verses[index].text}'),
+                        padding: EdgeInsets.all(2.0));
+                  },
                 ),
               ),
             ),
@@ -130,6 +164,20 @@ class _ParallaxPageState extends State<ParallaxPage> {
             ],
           );
         });
+  }
+
+  List<Widget> makeWidgetChildren(List<BibleVerse> jsonObject) {
+    ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: _verses.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Padding(
+            child:
+                Text('${jsonObject[index].verse}. ${jsonObject[index].text}'),
+            padding: EdgeInsets.all(8.0));
+      },
+    );
   }
 
   Container makeBody() {
@@ -431,6 +479,27 @@ class _ParallaxPageState extends State<ParallaxPage> {
             "${widget.lesson.day.name}/${widget.lesson.month.name}/${widget.lesson.year.name}"),
         centerTitle: true,
         actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.calendar_today,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => widget.type == 1
+                          ? ListPage(type: 1)
+                          : AnchorsPage(type: 2)));
+              // showModalBottomSheet(
+              //     context: context,
+              //     builder: (BuildContext context) {
+              //       return _generateTags();
+              //     });
+            },
+          ),
           if (widget.type == 1)
             IconButton(
               icon: Icon(

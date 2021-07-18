@@ -7,11 +7,15 @@ class _HeaderAppBar extends StatelessWidget {
     @required this.height,
     @required this.showTitle,
     @required this.category,
+    @required this.anchors,
+    @required this.bulletins,
   });
 
   final double height;
   final bool showTitle;
   final List<Category> category;
+  final Anchors anchors;
+  final Anchors bulletins;
 
   Widget _buildTitle(visible) {
     if (!visible) {
@@ -51,6 +55,8 @@ class _HeaderAppBar extends StatelessWidget {
                       height: itemHeight,
                       child: PokeCategoryCard(
                         e,
+                        anchors,
+                        bulletins,
                         onPress: () => AppNavigator.push(e.route),
                       ),
                     ),

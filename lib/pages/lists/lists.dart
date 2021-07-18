@@ -119,7 +119,8 @@ class _ListPageState extends State<ListPage> {
     final makeBody = Container(
       // decoration: BoxDecoration(color: Color.fromRGBO(58, 66, 86, 1.0)),
       child: _isLoading
-          ? SkeletonLoader(
+          ? 
+          SkeletonLoader(
               builder: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Row(
