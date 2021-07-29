@@ -12,12 +12,13 @@ import 'package:app/model/lesson.dart';
 import 'package:html/parser.dart';
 import 'package:app/models/Anchors.dart';
 import 'package:app/ui/screens/home/widgets/CommentsPage.dart';
+import 'package:intl/intl.dart';
 import 'parallax_component.dart';
 // import 'package:fluttertagselector/fluttertagselector.dart';
 // import 'package:esv_api/esv_api.dart';
 
 class ParallaxPage extends StatefulWidget {
-  final Anchors lesson;
+  Anchors lesson;
   final int type;
   ParallaxPage({Key key, this.lesson, this.type}) : super(key: key);
   @override
@@ -27,6 +28,98 @@ class ParallaxPage extends StatefulWidget {
 class _ParallaxPageState extends State<ParallaxPage> {
   List<String> selectedTags = [];
   List<BibleVerse> _verses = List<BibleVerse>();
+
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2005, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+//         String format = new DateFormat('dd/MMMM/yyyy').format(picked);
+// var formattedDate = format.parse(date)
+        var newFormat = DateFormat("dd/MMMM/yyyy");
+        String updatedDt = newFormat.format(picked);
+
+        selectedDate = picked;
+        print(updatedDt);
+        if (widget.type == 1) {
+          _populateAnchorss();
+        } else {
+          _populateBulletins();
+        }
+      });
+  }
+
+  Future<void> _populateBulletins() async {
+    final http.Response response = await http
+        .get(Uri.parse("https://nifes.org.ng/api/mobile/bulletin/index"));
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    responseData['bulletins'].forEach((newsDetail) {
+      var newFormat = DateFormat("d/MMMM/yyyy");
+      String updatedDt = newFormat.format(selectedDate);
+      String jsonyear = Year.fromJson(newsDetail['year']).name;
+      String jsonmonth = Year.fromJson(newsDetail['month']).name;
+      String jsonday = Year.fromJson(newsDetail['day']).name;
+      String alldate = "${jsonday}/${jsonmonth}/${jsonyear}";
+      if (updatedDt == alldate) {
+        final Anchors anch = Anchors(
+            description: newsDetail['description'],
+            verses: newsDetail['verses'],
+            uuid: newsDetail['uuid'],
+            createdAt: newsDetail['created_at'],
+            year: Year.fromJson(newsDetail['year']),
+            month: Year.fromJson(newsDetail['month']),
+            day: Year.fromJson(newsDetail['day']));
+        setState(() {
+          widget.lesson = anch;
+          if (widget.lesson.verses != null) {
+            selectedTags = widget.lesson.verses.split(",");
+          }
+        });
+      }
+    });
+  }
+
+  Future<void> _populateAnchorss() async {
+    final http.Response response = await http
+        .get(Uri.parse("https://nifes.org.ng/api/mobile/anchor/index"));
+    final Map<String, dynamic> responseData = json.decode(response.body);
+
+    responseData['anchors'].forEach((newsDetail) {
+      var newFormat = DateFormat("d/MMMM/yyyy");
+      String updatedDt = newFormat.format(selectedDate);
+      String jsonyear = Year.fromJson(newsDetail['year']).name;
+      String jsonmonth = Year.fromJson(newsDetail['month']).name;
+      String jsonday = Year.fromJson(newsDetail['day']).name;
+      String alldate = "${jsonday}/${jsonmonth}/${jsonyear}";
+      if (updatedDt == alldate) {
+        Anchors news = Anchors(
+            description: newsDetail['description'],
+            topic: newsDetail['topic'] ?? "",
+            oneYear: newsDetail['one_year'] ?? "",
+            bibleReading: newsDetail['bible_reading'] ?? "",
+            wordOFToday: newsDetail['word_of_today'] ?? "",
+            prayers: newsDetail['prayers'],
+            verses: newsDetail['verses'],
+            uuid: newsDetail['uuid'],
+            createdAt: newsDetail['created_at'],
+            year: Year.fromJson(newsDetail['year']),
+            month: Year.fromJson(newsDetail['month']),
+            day: Year.fromJson(newsDetail['day']));
+        setState(() {
+          widget.lesson = news;
+          if (widget.lesson.verses != null) {
+            selectedTags = widget.lesson.verses.split(",");
+          }
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -486,13 +579,14 @@ class _ParallaxPageState extends State<ParallaxPage> {
             ),
             onPressed: () {
               // do something
+              _selectDate(context);
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => widget.type == 1
-                          ? ListPage(type: 1)
-                          : AnchorsPage(type: 2)));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => widget.type == 1
+              //             ? ListPage(type: 1)
+              //             : AnchorsPage(type: 2)));
               // showModalBottomSheet(
               //     context: context,
               //     builder: (BuildContext context) {

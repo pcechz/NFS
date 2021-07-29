@@ -26,6 +26,7 @@ import 'package:app/ui/widgets/poke_category_card.dart';
 import 'package:app/ui/widgets/poke_container.dart';
 import 'package:app/ui/widgets/poke_news.dart';
 import 'package:app/ui/widgets/spacer.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -280,9 +281,42 @@ class _HomeScreenState extends State<HomeScreen> {
           day: Year.fromJson(newsDetail['day']));
       setState(() {
         _anchors.add(news);
+
         _isLoading = false;
       });
     });
+  }
+
+  Anchors getAnchor() {
+    if (_anchors.length > 0) {
+      for (Anchors i in _anchors) {
+        var newFormat = DateFormat("dd/MMMM/yyyy");
+        String updatedDt = newFormat.format(DateTime.now());
+        String jsonyear = i.year.name;
+        String jsonmonth = i.month.name;
+        String jsonday = i.day.name;
+        String alldate = "${jsonday}/${jsonmonth}/${jsonyear}";
+        if (updatedDt == alldate) {
+          return i;
+        }
+      }
+    }
+  }
+
+  Anchors getBullet() {
+    if (_bulletins.length > 0) {
+      for (Anchors i in _bulletins) {
+        var newFormat = DateFormat("dd/MMMM/yyyy");
+        String updatedDt = newFormat.format(DateTime.now());
+        String jsonyear = i.year.name;
+        String jsonmonth = i.month.name;
+        String jsonday = i.day.name;
+        String alldate = "${jsonday}/${jsonmonth}/${jsonyear}";
+        if (updatedDt == alldate) {
+          return i;
+        }
+      }
+    }
   }
 
   void _onScroll() {
@@ -395,14 +429,14 @@ class _HomeScreenState extends State<HomeScreen> {
             //   },
             // ),
 
-            new ListTile(
-              title: new Text("Anchor"),
-              trailing: new Icon(Icons.anchor),
-              onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ListPage(type: 1)))
-              },
-            ),
+            // new ListTile(
+            //   title: new Text("Anchor"),
+            //   trailing: new Icon(Icons.anchor),
+            //   onTap: () => {
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => ListPage(type: 1)))
+            //   },
+            // ),
             new ListTile(
               title: new Text("Associate and Student portal"),
               trailing: new Icon(Icons.group),
@@ -417,16 +451,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             "Associate/Student portal")))
               },
             ),
-            new ListTile(
-              title: new Text("prayer bulletin"),
-              trailing: new Icon(Icons.book),
-              onTap: () => {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AnchorsPage(type: 2)))
-              },
-            ),
+            // new ListTile(
+            //   title: new Text("prayer bulletin"),
+            //   trailing: new Icon(Icons.book),
+            //   onTap: () => {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => AnchorsPage(type: 2)))
+            //   },
+            // ),
             new ListTile(
               title: new Text("Updates"),
               trailing: new Icon(Icons.update),
@@ -472,7 +506,11 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _scrollController,
         headerSliverBuilder: (_, __) => [
           _HeaderAppBar(
-              height: appBarHeight, showTitle: showTitle, category: categories, anchors: _anchors[0], bulletins: _bulletins[0]),
+              height: appBarHeight,
+              showTitle: showTitle,
+              category: categories,
+              anchors: getAnchor() ?? _anchors[0],
+              bulletins: getBullet() ?? _bulletins[0]),
         ],
         body: ListView(
           physics: BouncingScrollPhysics(),
